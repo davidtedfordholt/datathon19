@@ -7,7 +7,7 @@ output: github_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 if (!require(pacman)) install.packages("pacman"); require(pacman)
-pacman::p_load(tidyverse, lubridate)
+pacman::p_load(tidyverse, lubridate, fst)
 source("setup.R")
 
 load_tables(c("A4A_Monthly_Cargo_Traffic", "AAR_Annual"))
@@ -16,8 +16,10 @@ load_tables(c("A4A_Monthly_Cargo_Traffic", "AAR_Annual"))
 ## Data Source
 
 ```{r}
+#  <- read_fst("./data/temp/.fst)
 
 
 
+# write_fst(, "./data/temp/.fst")
 ```
 
