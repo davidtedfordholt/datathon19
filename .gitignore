@@ -3,7 +3,7 @@
 .Rhistory
 .RData
 .Ruserdata
-data/*
-!data/.keep
 data/raw/*
 !data/raw/.keep
+data/*
+!data/.keep
