@@ -10,6 +10,9 @@ if (!require(pacman)) install.packages("pacman"); require(pacman)
 pacman::p_load(tidyverse, lubridate, fst)
 source("setup.R")
 
+# Add the names of all tables in [Warehouse].[dbo] that need to be pulled
+# Add them as a quoted string or vector of strings.
+# Capitalization IS important!
 load_tables(c("A4A_Monthly_Cargo_Traffic", "AAR_Annual"))
 ```
 
