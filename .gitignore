@@ -5,5 +5,5 @@
 .Ruserdata
 data/raw/*
 !data/raw/.keep
-data/*
-!data/.keep
+data/temp/*
+!data/temp/.keep
