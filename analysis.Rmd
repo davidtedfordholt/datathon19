@@ -1,0 +1,23 @@
+---
+title: "Exploration - "
+author: ""
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+if (!require(pacman)) install.packages("pacman"); require(pacman)
+pacman::p_load(tidyverse, lubridate)
+source("setup.R")
+
+load_tables(c("A4A_Monthly_Cargo_Traffic", "AAR_Annual"))
+```
+
+## Data Source
+
+```{r}
+
+
+
+```
+
