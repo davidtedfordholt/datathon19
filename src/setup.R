@@ -7,6 +7,7 @@ load_tables <- function(tables) {
     
     if(!require(odbc)) install.packages("odbc"); require(odbc)
     if(!require(readr)) install.packages("readr"); require(readr)
+    if(!require(feather)) install.packages("feather"); require(feather)
     
     
     if (!is.vector(tables) & !is.list(tables)) {
@@ -20,24 +21,25 @@ load_tables <- function(tables) {
                             Database = "Warehouse",
                             UID = "fwdbview",
                             PWD = "p$t:n7dtvnAcs?B<",
-                            Port = 1433)
+                            Port = 1433,
+                            quiet = FALSE)
     
     # set working directory to the data folder
     setwd("./data/raw/")
     for (i in tables) {
         
-        filename_fst <- paste0(i, ".binary")
+        filename_feather <- paste0(i, ".feather")
         filename_csv <- paste0(i, ".csv")
         
         # if the table has previously been downloaded,
         # load from the file
-        if (file.exists(filename_fst)) {
-            tmp <- read_fst(filename_fst)
-            assign(i, value = tmp)
+        if (file.exists(filename_feather)) {
+            tmp <- read_feather(filename_feather)
+            assign(i, value = tmp, pos = .GlobalEnv)
             rm(tmp)
         } else if (file.exists(filename_csv)) {
             tmp <- read_csv(filename_csv)
-            assign(i, value = tmp)
+            assign(i, value = tmp, pos = .GlobalEnv)
             rm(tmp)
             
         # if the table hasn't been downloaded,
@@ -47,18 +49,19 @@ load_tables <- function(tables) {
             tmp <- dbGetQuery(connection, paste0("SELECT * FROM Warehouse.dbo.", i))
             
             # store as binary, if possible
-            if () {
-                write_fst(tmp, path = filename_fst)
-                
-            # otherwise, use csv    
+            # otherwise, use csv 
+            classes <- lapply(tmp, class)
+            if (!("list" %in% classes | "blob" %in% classes)) {
+                write_feather(tmp, path = filename_feather)
             } else {
-                # write a .csv of the data in the /data/ folder
                 write_csv(tmp, path = filename_csv)
-                
-                # store the data into memory
-                assign(i, value = tmp)
-                rm(tmp)
             }
+            
+            # place the table into memory
+            assign(i, value = tmp, pos = .GlobalEnv)
+            
+            # clear tmp
+            rm(tmp)
         }
     }
     
@@ -67,7 +70,5 @@ load_tables <- function(tables) {
     
     
     dbDisconnect(connection)
-    rm(connection)
+    # rm(connection, classes, tables, filename_csv, filename_feather, i)
 }
-
-
