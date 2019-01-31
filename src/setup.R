@@ -28,46 +28,47 @@ load_tables <- function(tables) {
     setwd("./data/raw/")
     for (i in tables) {
         
-        filename_feather <- paste0(i, ".feather")
-        filename_csv <- paste0(i, ".csv")
-        
-        # if the table has previously been downloaded,
-        # load from the file
-        if (file.exists(filename_feather)) {
-            tmp <- read_feather(filename_feather)
-            assign(i, value = tmp, pos = .GlobalEnv)
-            rm(tmp)
-        } else if (file.exists(filename_csv)) {
-            tmp <- read_csv(filename_csv)
-            assign(i, value = tmp, pos = .GlobalEnv)
-            rm(tmp)
+        if (!exists(i)) {
+            filename_feather <- paste0(i, ".feather")
+            filename_csv <- paste0(i, ".csv")
             
-        # if the table hasn't been downloaded,
-        # download and store the table
-        } else {
-            # execute SQL query for all data in the table
-            tmp <- dbGetQuery(connection, paste0("SELECT * FROM Warehouse.dbo.", i))
-            
-            # store as binary, if possible
-            # otherwise, use csv 
-            classes <- lapply(tmp, class)
-            if (!("list" %in% classes | "blob" %in% classes)) {
-                write_feather(tmp, path = filename_feather)
+            # if the table has previously been downloaded,
+            # load from the file
+            if (file.exists(filename_feather)) {
+                tmp <- read_feather(filename_feather)
+                assign(i, value = tmp, pos = .GlobalEnv)
+                rm(tmp)
+            } else if (file.exists(filename_csv)) {
+                tmp <- read_csv(filename_csv)
+                assign(i, value = tmp, pos = .GlobalEnv)
+                rm(tmp)
+                
+                # if the table hasn't been downloaded,
+                # download and store the table
             } else {
-                write_csv(tmp, path = filename_csv)
+                # execute SQL query for all data in the table
+                tmp <- dbGetQuery(connection, paste0("SELECT * FROM Warehouse.dbo.", i))
+                
+                # store as binary, if possible
+                # otherwise, use csv 
+                classes <- lapply(tmp, class)
+                if (!("list" %in% classes | "blob" %in% classes)) {
+                    write_feather(tmp, path = filename_feather)
+                } else {
+                    write_csv(tmp, path = filename_csv)
+                }
+                
+                # place the table into memory
+                assign(i, value = tmp, pos = .GlobalEnv)
+                
+                # clear tmp
+                rm(tmp)
             }
-            
-            # place the table into memory
-            assign(i, value = tmp, pos = .GlobalEnv)
-            
-            # clear tmp
-            rm(tmp)
         }
     }
     
     # return the working directory to the repo folder
     setwd("../..")
-    
     
     dbDisconnect(connection)
     # rm(connection, classes, tables, filename_csv, filename_feather, i)
