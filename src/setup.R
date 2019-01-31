@@ -73,45 +73,47 @@ load_tables <- function(tables) {
     # rm(connection, classes, tables, filename_csv, filename_feather, i)
 }
 
-create_reports <- function(tables, NA_threshold = 1) {
-    for (i in tables) {
-        tmp <- get(i)
-        
-        tmp <- tmp[, sapply(tmp, class) %in% 
-                       c("integer", "logical", "numeric", "double", "character")]
-        
-        check_if_NA_above_threshold <- function(column, threshold = 1) {
-            return(sum(is.na(column))/length(column) >= threshold)
-        }
-        
-        tmp <- tmp[, !sapply(tmp, check_if_NA_above_threshold, NA_threshold)]
-        
-        config <- list(
-            "introduce" = list(),
-            "plot_str" = list(
-                "type" = "diagonal",
-                "fontSize" = 35,
-                "width" = 1000,
-                "margin" = list("left" = 350, "right" = 250)
-            ),
-            "plot_missing" = list(),
-            "plot_histogram" = list(),
-            "plot_qq" = list(sampled_rows = 1000L),
-            "plot_bar" = list(),
-            # "plot_correlation" = list("cor_args" = list("use" = "pairwise.complete.obs")),
-            # "plot_prcomp" = list(),
-            "plot_boxplot" = list(),
-            "plot_scatterplot" = list(sampled_rows = 1000L)
-        )
-        
-        try(DataExplorer::
-                create_report(tmp, 
-                              output_file = paste0(i, ".html"), 
-                              output_dir = "./reports/",
-                              output_format = "html_document",
-                              config = config)
-        )
-    }
-    rm(i); rm(tmp)
-}
+####    this is in progress and NOT WORKING     ####
+
+# create_reports <- function(tables, NA_threshold = 1) {
+#     for (i in tables) {
+#         tmp <- get(i)
+#         
+#         tmp <- tmp[, sapply(tmp, class) %in% 
+#                        c("integer", "logical", "numeric", "double", "character")]
+#         
+#         check_if_NA_above_threshold <- function(column, threshold = 1) {
+#             return(sum(is.na(column))/length(column) >= threshold)
+#         }
+#         
+#         tmp <- tmp[, !sapply(tmp, check_if_NA_above_threshold, NA_threshold)]
+#         
+#         config <- list(
+#             "introduce" = list(),
+#             "plot_str" = list(
+#                 "type" = "diagonal",
+#                 "fontSize" = 35,
+#                 "width" = 1000,
+#                 "margin" = list("left" = 350, "right" = 250)
+#             ),
+#             "plot_missing" = list(),
+#             "plot_histogram" = list(),
+#             "plot_qq" = list(sampled_rows = 1000L),
+#             "plot_bar" = list(),
+#             # "plot_correlation" = list("cor_args" = list("use" = "pairwise.complete.obs")),
+#             # "plot_prcomp" = list(),
+#             "plot_boxplot" = list(),
+#             "plot_scatterplot" = list(sampled_rows = 1000L)
+#         )
+#         
+#         try(DataExplorer::
+#                 create_report(tmp, 
+#                               output_file = paste0(i, ".html"), 
+#                               output_dir = "./reports/",
+#                               output_format = "html_document",
+#                               config = config)
+#         )
+#     }
+#     rm(i); rm(tmp)
+# }
 
