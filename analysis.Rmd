@@ -19,7 +19,7 @@ load_tables(c("A4A_Monthly_Cargo_Traffic", "AAR_Annual"))
 ## Data Source
 
 ```{r}
-#  <- read_fst("./data/temp/.fst)
+#  <- read_fst("./data/temp/.fst")
 
 
 
