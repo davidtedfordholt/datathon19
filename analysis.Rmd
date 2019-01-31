@@ -16,13 +16,6 @@ source("./src/setup.R")
 tables <- c("DIBI_Permits", "AAR_Annual")
 
 load_tables(tables)
-for (i in tables) {
-    DataExplorer::create_report(get(i),
-        output_file = paste0(i, ".html"), 
-        output_dir = "./reports/",
-        output_format = "html_document",
-        config = config)
-}
 ```
 
 ## Data Source
