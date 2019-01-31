@@ -18,8 +18,8 @@ load_tables <- function(tables) {
                             Driver = "SQL Server",
                             Server = "freightwaves.ctaqnedkuefm.us-east-2.rds.amazonaws.com",
                             Database = "Warehouse",
-                            UID = "fwdbmain",
-                            PWD = "7AC?Ls9_z3W#@XrR",
+                            UID = "fwdbview",
+                            PWD = "p$t:n7dtvnAcs?B<",
                             Port = 1433)
     
     # set working directory to the data folder
