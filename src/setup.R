@@ -72,3 +72,13 @@ load_tables <- function(tables) {
     dbDisconnect(connection)
     # rm(connection, classes, tables, filename_csv, filename_feather, i)
 }
+
+create_reports <- function() {
+    for (i in Filter(function(x) is.data.frame(get(x)), ls())) {
+        df <- get(i)
+        
+        df[, !(sapply(df, class) %in% c("blob", "list"))]
+        
+        DataExplorer::create_report(i, output_file = paste0(i, ".html"), output_dir = "./reports/")
+    }
+}
