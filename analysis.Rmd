@@ -7,7 +7,7 @@ output: github_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 if (!require(pacman)) install.packages("pacman"); require(pacman)
-pacman::p_load(tidyverse, lubridate, fst)
+pacman::p_load(tidyverse, lubridate, fst, DataExplorer)
 source("./src/setup.R")
 
 # Add the names of all tables in [Warehouse].[dbo] that need to be pulled
@@ -19,10 +19,20 @@ load_tables(c("A4A_Monthly_Cargo_Traffic", "AAR_Annual"))
 ## Data Source
 
 ```{r}
-#  <- read_fst("./data/temp/.fst")
+
+```
+
+
+```{r}
 
 
 
 # write_fst(, "./data/temp/.fst")
 ```
 
+```{r}
+#  <- read_fst("./data/temp/.fst")
+
+
+
+```
