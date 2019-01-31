@@ -38,7 +38,7 @@ load_tables <- function(tables) {
             assign(i, value = tmp, pos = .GlobalEnv)
             rm(tmp)
         } else if (file.exists(filename_csv)) {
-            tmp <- read_csv(filename_csv, stringsAsFactors = FALSE)
+            tmp <- read_csv(filename_csv)
             assign(i, value = tmp, pos = .GlobalEnv)
             rm(tmp)
             
