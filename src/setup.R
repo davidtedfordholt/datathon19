@@ -106,9 +106,9 @@ create_reports <- function(tables, NA_threshold = 1) {
         
         try(DataExplorer::
                 create_report(tmp, 
-                              output_file = paste0(i, ".pdf"), 
+                              output_file = paste0(i, ".html"), 
                               output_dir = "./reports/",
-                              output_format = "pdf_document",
+                              output_format = "html_document",
                               config = config)
         )
     }
