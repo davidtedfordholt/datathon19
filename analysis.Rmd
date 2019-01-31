@@ -16,6 +16,11 @@ source("./src/setup.R")
 tables <- c("DIBI_Permits", "AAR_Annual")
 
 load_tables(tables)
+
+# df %>%
+#     DataExplorer::create_report(
+#         output_file = ".html",
+#         output_dir = "./reports/")
 ```
 
 ## Data Source
