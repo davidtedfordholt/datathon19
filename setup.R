@@ -26,26 +26,39 @@ load_tables <- function(tables) {
     setwd("./data/raw/")
     for (i in tables) {
         
-        filename <- paste0(i, ".csv")
+        filename_fst <- paste0(i, ".binary")
+        filename_csv <- paste0(i, ".csv")
         
-        if (!file.exists(filename)) {
+        # if the table has previously been downloaded,
+        # load from the file
+        if (file.exists(filename_fst)) {
+            tmp <- read_fst(filename_fst)
+            assign(i, value = tmp)
+            rm(tmp)
+        } else if (file.exists(filename_csv)) {
+            tmp <- read_csv(filename_csv)
+            assign(i, value = tmp)
+            rm(tmp)
             
+        # if the table hasn't been downloaded,
+        # download and store the table
+        } else {
             # execute SQL query for all data in the table
             tmp <- dbGetQuery(connection, paste0("SELECT * FROM Warehouse.dbo.", i))
             
-            # write a .csv of the data in the /data/ folder
-            write_csv(tmp, path = filename)
-            
-            # store the data into memory
-            assign(i, value = tmp)
-            rm(tmp)
-            
-        } else {
-            
-            tmp <- read_csv(filename)
-            assign(i, value = tmp)
-            rm(tmp)
-            
+            # store as binary, if possible
+            if () {
+                write_fst(tmp, path = filename_fst)
+                
+            # otherwise, use csv    
+            } else {
+                # write a .csv of the data in the /data/ folder
+                write_csv(tmp, path = filename_csv)
+                
+                # store the data into memory
+                assign(i, value = tmp)
+                rm(tmp)
+            }
         }
     }
     
