@@ -1,3 +1,24 @@
+create_connection <- function() {
+    return(
+        odbc::dbConnect(odbc::odbc(),
+                        Driver = "SQL Server",
+                        Server = "freightwaves.ctaqnedkuefm.us-east-2.rds.amazonaws.com",
+                        Database = "Warehouse",
+                        UID = "fwdbview",
+                        PWD = "p$t:n7dtvnAcs?B<",
+                        Port = 1433,
+                        quiet = FALSE)
+    )
+}
+
+list_tables <- function() {
+    return(create_connection() %>%
+               odbc::dbListTables() %>%
+               .[1:(which(. == "trace_xe_action_map") - 1)])
+    odbc::dbDisconnect()
+}
+
+
 load_tables <- function(tables) {
     ## This file allows for the data environment to be set up
     ## consistently for different users. All data will live in
@@ -15,14 +36,7 @@ load_tables <- function(tables) {
     }
     
     # create SQL Server connection
-    connection <- dbConnect(odbc(),
-                            Driver = "SQL Server",
-                            Server = "freightwaves.ctaqnedkuefm.us-east-2.rds.amazonaws.com",
-                            Database = "Warehouse",
-                            UID = "fwdbview",
-                            PWD = "p$t:n7dtvnAcs?B<",
-                            Port = 1433,
-                            quiet = FALSE)
+    connection <- create_connection()
     
     # set working directory to the data folder
     setwd("./data/raw/")
