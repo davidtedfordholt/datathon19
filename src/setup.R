@@ -19,7 +19,7 @@ list_tables <- function() {
 }
 
 
-load_tables <- function(tables) {
+load_tables <- function(tables, drop_previous_pull = FALSE) {
     ## This file allows for the data environment to be set up
     ## consistently for different users. All data will live in
     ## the /data/ folder
@@ -45,6 +45,11 @@ load_tables <- function(tables) {
         if (!exists(i)) {
             filename_feather <- paste0(i, ".feather")
             filename_csv <- paste0(i, ".csv")
+            
+            if (drop_previous_pull == TRUE) {
+                if (file.exists(filename_feather)) file.remove(filename_feather)
+                if (file.exists(filename_csv)) file.remove(filename_csv)
+            }
             
             # if the table has previously been downloaded,
             # load from the file
