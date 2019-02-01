@@ -1,7 +1,7 @@
 ---
 title: "Exploration - "
 author: ""
-output: github_document
+output: pdf_document
 ---
 
 ```{r setup, include=FALSE}
@@ -18,16 +18,20 @@ Capitalization is important!
 
 ```{r}
 # list_tables()
-load_tables(tables = c(""))
+load_tables(tables = c(""), drop_previous_pull = FALSE)
 ```
 
 ## Data Exploration
 
+Uncomment and change "df" to a table name to run the DataExplorer
+report generator. The output will be in the /report folder, and you
+can run more tables or just commenting the chunk out again.
+
 ```{r}
-# df %>%
-#     DataExplorer::create_report(
-#         output_file = ".html",
-#         output_dir = "./reports/")
+df %>%
+    DataExplorer::create_report(
+        output_file = ".html",
+        output_dir = "./reports/")
 ```
 
 ## 
