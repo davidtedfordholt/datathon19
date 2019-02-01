@@ -9,37 +9,39 @@ knitr::opts_chunk$set(echo = TRUE)
 if (!require(pacman)) install.packages("pacman"); require(pacman)
 pacman::p_load(tidyverse, lubridate, feather, DataExplorer)
 source("./src/setup.R")
+```
 
-# Add the names of all tables in [Warehouse].[dbo] that need to be pulled
-# Add them as a quoted string or vector of strings.
-# Capitalization IS important!
-tables <- c("")
+## Data Ingestion
 
-load_tables(tables)
+Add the names of tables in [Warehouse].[dbo] that need to be pulled.
+Capitalization is important!
 
+```{r}
+# list_tables()
+load_tables(tables = c(""))
+```
+
+## Data Exploration
+
+```{r}
 # df %>%
 #     DataExplorer::create_report(
 #         output_file = ".html",
 #         output_dir = "./reports/")
 ```
 
-## Data Source
+## 
 
 ```{r}
-
-```
-
-
-```{r}
-
 
 
 # write_fst(, "./data/temp/.fst")
 ```
 
+## 
+
 ```{r}
 #  <- read_fst("./data/temp/.fst")
-
 
 
 ```
