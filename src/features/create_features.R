@@ -2,9 +2,8 @@ if (!require(pacman)) install.packages("pacman"); require(pacman)
 pacman::p_load(tidyverse, lubridate, feather)
 
 # READ IN RAW/EXT DATA
-data <- read_feather("./data/raw/")
-# data <- read_csv("./data/raw/")
-# ext <- read_csv("./data/external/")
+data <- read_feather("./data/interim//")
+# data <- read_csv("./data/interim/")
 
 
 
@@ -40,5 +39,5 @@ data <- read_feather("./data/raw/")
 
 
 # SAVE PROCESSED DATA
-write_feather(final_data, "./data/processed/")
-# write_csv(final_data, "./data/processed")
+write_feather(data, "./data/processed/")
+# write_csv(data, "./data/processed")
