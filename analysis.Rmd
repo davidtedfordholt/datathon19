@@ -39,13 +39,13 @@ df %>%
 ```{r}
 
 
-# write_fst(, "./data/temp/.fst")
+# write_fst(, "./data/interim/.fst")
 ```
 
 ## 
 
 ```{r}
-#  <- read_fst("./data/temp/.fst")
+#  <- read_fst("./data/interim/.fst")
 
 
 ```
