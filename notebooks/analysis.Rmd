@@ -8,7 +8,7 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 if (!require(pacman)) install.packages("pacman"); require(pacman)
 pacman::p_load(tidyverse, lubridate, feather, DataExplorer)
-source("./src/setup.R")
+source("setup.R")
 ```
 
 ## Data Ingestion
