@@ -1,3 +1,10 @@
+install_requirements <- function() {
+    pkgs <- readLines("requirements.txt")
+    for (i in pkgs) {
+        if (!require(i)) install.packages(i)
+    }
+}
+
 create_connection <- function() {
     return(
         odbc::dbConnect(odbc::odbc(),
