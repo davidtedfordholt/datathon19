@@ -1,3 +1,6 @@
+# packages listed in this file will be installed
+# when setup.R is run.
+
 tidyverse
 odbc
 feather
