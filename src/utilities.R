@@ -66,10 +66,10 @@ load_tables <- function(tables, drop_previous_pull = FALSE) {
                 # download and store the table
             } else {
                 # create SQL Server connection
-                connection <- create_connection()
+                if (!exists("connection")) connection <- create_connection()
                 
                 # execute SQL query for all data in the table                
-                tmp <- dbGetQuery(connection, paste0("SELECT * FROM Warehouse.dbo.", i))
+                tmp <- dbGetQuery(connection, paste0("SELECT * FROM dbo.", i))
                 
                 # store as binary, if possible
                 # otherwise, use csv 
