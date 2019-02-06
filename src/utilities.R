@@ -2,7 +2,7 @@ install_requirements <- function(file = "requirements.txt") {
     if (!require(pacman)) install.packages("pacman")
     pkgs <- readLines(file)
     pkgs <- pkgs[which(substr(pkgs, 1, 1) != "#" & pkgs != "")]
-    pacman::p_load(pkgs)
+    pacman::p_load(char = pkgs)
 }
 
 create_connection <- function() {
