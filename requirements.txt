@@ -1,2 +1,6 @@
 tidyverse
 odbc
+feather
+DataExplorer
+caret
+mlbench
