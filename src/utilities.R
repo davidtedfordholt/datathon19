@@ -35,11 +35,8 @@ load_tables <- function(tables, drop_previous_pull = FALSE) {
     
     
     if (!is.vector(tables) & !is.list(tables)) {
-        stop("Please provide a vector or list of table names in Warehouse.dbo.")
+        stop("Please provide a vector or list of table names")
     }
-    
-    # create SQL Server connection
-    connection <- create_connection()
     
     # set working directory to the data folder
     setwd("./data/raw/")
@@ -68,7 +65,10 @@ load_tables <- function(tables, drop_previous_pull = FALSE) {
                 # if the table hasn't been downloaded,
                 # download and store the table
             } else {
-                # execute SQL query for all data in the table
+                # create SQL Server connection
+                connection <- create_connection()
+                
+                # execute SQL query for all data in the table                
                 tmp <- dbGetQuery(connection, paste0("SELECT * FROM Warehouse.dbo.", i))
                 
                 # store as binary, if possible
@@ -92,6 +92,6 @@ load_tables <- function(tables, drop_previous_pull = FALSE) {
     # return the working directory to the repo folder
     setwd("../..")
     
-    dbDisconnect(connection)
+    if (exists("connection")) dbDisconnect(connection)
     # rm(connection, classes, tables, filename_csv, filename_feather, i)
 }
